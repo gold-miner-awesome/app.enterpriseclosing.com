@@ -27,12 +27,12 @@ body {
 .main-container,
 .container-login {
     margin: -1.5rem 0;
-    min-height: calc(100vh - 66px);
+    min-height: calc(100vh - 74px);
 }
 .container-login,
 .container-register {
     .login-form {
-        height: calc(100vh - 66px);
+        height: calc(100vh - 74px);
         padding: 0;
     }
     .card {
@@ -67,7 +67,7 @@ body {
  */
 #sidebarMenu {
     border-right: 1px solid #fff;
-    min-height: calc(100vh - 66px);
+    min-height: calc(100vh - 74px);
 }
  .sidebar {
     // position: fixed;
@@ -91,13 +91,6 @@ body {
     padding-top: .5rem;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  }
-  
-  @supports ((position: -webkit-sticky) or (position: sticky)) {
-    .sidebar-sticky {
-    //   position: -webkit-sticky;
-    //   position: sticky;
-    }
   }
   
   .sidebar .nav-link {
@@ -129,10 +122,13 @@ body {
   /*
    * Navbar
    */
-  
+  .navbar {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+  }
   .navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
     font-size: 1rem;
     background-color: rgba(0, 0, 0, .25);
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
@@ -167,10 +163,15 @@ body {
     h3 {
         font-size: 1.3rem;
         font-weight: 600;
+        text-transform: uppercase;
     }
     .task-section {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 400;
+
+        .mw-unset {
+            min-width: unset;
+        }
   
         input[type=radio],
         input[type=checkbox] {
@@ -184,7 +185,7 @@ body {
   
         .form-check {
             justify-content: left;
-            height: 30px;
+            height: 22px;
             // padding-left: 2px;
             padding: 0.2rem 0.5rem;
         }
@@ -200,10 +201,31 @@ body {
         
         input.form-control {
             border-radius: 0;
+            height: 1.5rem;
         }
 
-        .mr-task-input {
-            margin-left: calc(0.5rem + 30px);
+        input[type=text].form-control {
+            width: 100%;
+        }
+
+        .mr-20 {
+            // margin-left: calc(0.5rem + 30px);
+            // margin-left: 0;
+            margin-right: 20px;
+        }
+
+        .col-20 {
+            max-width: 20%;
+            flex: 0 0 20%;
+        }
+
+        .btn-app-default {
+            background-color: #5c6370;
+            color: #fff;
+        }
+
+        .btn-app-default:hover {
+            background-color: #262729;
         }
     }
 }
@@ -211,6 +233,10 @@ body {
 /*
 * datatable
 */
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+    background-color: #fff;
+}
+
 .dataTables_wrapper .dataTables_length select {
     background-color: #fff;
     margin: 0 5px;
@@ -247,9 +273,10 @@ thead input {
     width: 100%;
 }
 
-.table-wrapper {
-    // max-height: 350px;
-    // overflow-y: auto;
+table.dataTable thead th,
+table.dataTable thead td {
+    padding-top: 3px;
+    padding-bottom: 4px;
 }
 
 table.dataTable tbody td {
@@ -294,6 +321,95 @@ input[type='checkbox'] {
     box-shadow: 0 0 0 2px #fff;
 }
 
+/*
+* tooltip
+*/
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    // color: #e3342f;
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+    border-radius: .25rem;
+}
+
+.tooltip.bs-tooltip-auto[x-placement^=right] .arrow::before, .tooltip.bs-tooltip-right .arrow::before {
+    margin-top: -3px;
+    content: "";
+    border-width: 5px 5px 5px 0;
+    border-right-color: #fff;
+}
+
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^=top] .arrow::before {
+    top: 0;
+    border-width: 0.4rem 0.4rem 0;
+    border-top-color: #fff;
+}
+
+.tooltip.show.bs-tooltip-right {
+    left: 5px !important;
+}
+
+.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^=left] .arrow::before {
+    left: 0;
+    border-width: 0.4rem 0 0.4rem 0.4rem;
+    border-left-color: #fff;
+}
+
+/*
+* modal
+*/
+#task-add-modal {
+    .additional-tasks {
+        padding: 0 1rem;
+    }
+    input.form-control {
+        border-radius: 0;
+        height: 1.5rem;
+    }
+    .btn-suggest-save-wrapper {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    select.form-control,
+    button.btn-suggest-save {
+        border-radius: 0;
+        height: 1.5rem;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+/*
+* select/deselect checkbox
+*/
+.form-inline .form-check-input.select-all {
+    margin-bottom: 0.5rem;
+    margin-left: 1rem;
+}
+
+/*
+* outbound
+*/
+.persons-table-wrapper {
+    height: 315px;
+    overflow-y: auto;
+}
+table#persons-table input {
+    border-radius: 0;
+    height: 1.5rem;
+}
+table#persons-table tr th {
+    position: sticky;
+    top: -1px;
+}
+
+@media (min-width: 576px) {
+    .ml-sm-auto, .mx-sm-auto {
+        margin: 0 auto !important;
+    }
+}
 @media (min-width: 768px) {
     .pl-md-4, .px-md-4 {
         padding-left: 3rem !important;
@@ -301,5 +417,15 @@ input[type='checkbox'] {
 
     .pr-md-4, .px-md-4 {
         padding-right: 3rem !important;
+    }
+
+    .col-md-3 {
+        min-width: 200px;
+    }
+}
+@media (min-width: 992px) {
+    .col-lg-2 { 
+        max-width: 13%;
+        min-width: 200px;
     }
 }
