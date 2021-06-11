@@ -2,16 +2,16 @@
     @csrf
     <h3 class="mb-0">Tasks To Complete</h3>
     <div class="table-responsive table-wrapper mt-4 mb-4" id="task-table-wrapper">
-        <table class="table table-hover datatable w-100" id="task-table">
+        <table class="table table-dark table-hover datatable w-100" id="task-table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Action + Step</th>
-                    <th scope="col">Person / Account</th>
-                    <th scope="col">Opportunity</th>
-                    <th scope="col">Note</th>
-                    <th scope="col">By</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col" class="no-sort">Result</th>
+                    <th scope="col"><div class="task-table-header">Action + Step</div></th>
+                    <th scope="col"><div class="task-table-header">Person / Account</div></th>
+                    <th scope="col"><div class="task-table-header">Opportunity</div></th>
+                    <th scope="col"><div class="task-table-header">Note</div></th>
+                    <th scope="col"><div class="task-table-header">By</div></th>
+                    <th scope="col"><div class="task-table-header">Priority</div></th>
+                    <th scope="col" class="no-sort"><div class="task-table-header">Result</div></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,20 +24,20 @@
                         $class_name = 'bg-danger text-white';
                         $priority_name = 'High';
                     } elseif ($task['priority'] == '2') {
-                        $class_name = 'bg-warning';
+                        $class_name = 'bg-warning text-dark';
                         $priority_name = 'Medium';
                     } elseif ($task['priority'] == '3') {
-                        $class_name = 'bg-light';
+                        $class_name = 'bg-light text-dark';
                         $priority_name = 'Normal';
                     } else {
-                        $class_name = 'bg-light';
+                        $class_name = 'bg-light text-dark';
                         $priority_name = '';
                     }
                 @endphp
                 <tr class="{{ $class_name }}">
                     <td>{{ $task['action_name'] }} {{ $task['step_name'] }}</td>
                     <td>{{ $task['person_account'] }}</td>
-                    <td>{{ $task['opportunity'] }}</td>
+                    <td>{{ $task['opportunity_name'] }}</td>
                     <td>
                         {{ $task['note'] }}
                     </td>
@@ -118,7 +118,12 @@
             <h3 id="ts-3-person-account-label" data-toggle="tooltip" data-placement="top" title="Required this or person/account!">Opportunity</h3>
             <div class="row task-section col-md-12 col-sm-12">
                 <div class="input-group w-100">
-                    <input type="text" class="form-control" placeholder="Opportunity..." aria-label="Opportunity" aria-describedby="ts-6-opportunity" id="ts-6-opportunity" name="opportunity" >
+                    <select name="opportunity" aria-label="Opportunity" aria-describedby="ts-6-opportunity" id="ts-6-opportunity" class="form-control">
+                        <option value="0"></option>
+                        @foreach ($opportunities as $opp)
+                            <option value="{{ $opp->id }}">{{ $opp->opportunity }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
@@ -289,7 +294,11 @@
                                 <input type="text" class="form-control" value="{{ old('saved_person_account') }}" id="suggest-person-account-{{ $idx }}" name="suggest-person-account-{{ $idx }}" readonly placeholder="Person/Account..."/>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" value="{{ old('saved_opportunity') }}" id="suggest-opportunity-{{ $idx }}" name="suggest-opportunity-{{ $idx }}" readonly placeholder="Opportunity..."/>
+                                <select class="form-control" id="suggest-opportunity-{{ $idx }}" name="suggest-opportunity-{{ $idx }}" readonly>
+                                    @foreach ($opportunities as $opp)
+                                        <option value="{{ $opp->id }}" @if (old('saved_opportunity') == $opp->id){{ 'selected' }}@else{{ 'disabled' }}@endif>{{ $opp->opportunity }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" id="suggest-note-{{ $idx }}" name="suggest-note-{{ $idx }}" placeholder="Note..." />

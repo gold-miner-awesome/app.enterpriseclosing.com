@@ -36,6 +36,9 @@ $(document).ready(function () {
       emptyTable: 'There is no tasks for you to complete.'
     }
   });
+  taskTable.columns().iterator('column', function (ctx, idx) {
+    $(taskTable.column(idx).header()).find('.task-table-header').append('<span class="sort-icon"/>');
+  });
   $('.date').datepicker({
     format: 'dd-mm-yyyy',
     todayBtn: "linked",
@@ -74,13 +77,7 @@ $(document).ready(function () {
         }
       }
     });
-  }); // $('input#action-other-name').change(function() {
-  //     $('#action-other').val($(this).val());
-  // });
-  // $('input#step-other-name').change(function() {
-  //     $('#step-other').val($(this).val());
-  // });
-  //validate form and submit
+  }); //validate form and submit
 
   $('button#btn-create-task').click(function () {
     var isActionChecked = false;
@@ -111,7 +108,7 @@ $(document).ready(function () {
     } //check from/to/account && opportunity
 
 
-    if ($('input#ts-3-person-account').val() == '' && $('input#ts-6-opportunity').val() == '') {
+    if ($('input#ts-3-person-account').val() == '' && $('select#ts-6-opportunity').val() == '0') {
       $('h3#ts-3-person-account-label').tooltip('show');
       $('h3#ts-6-opportunity-label').tooltip('show');
       $('input#ts-3-person-account').focus();
@@ -148,9 +145,9 @@ $(document).ready(function () {
     $("form#tasks-form").submit();
   });
   $('input#ts-3-person-account').change(function () {
-    $('input#ts-6-opportunity').val('');
+    $('select#ts-6-opportunity').val('');
   });
-  $('input#ts-6-opportunity').change(function () {
+  $('select#ts-6-opportunity').change(function () {
     $('input#ts-3-person-account').val('');
   }); //suggest setting save
 
@@ -160,6 +157,7 @@ $(document).ready(function () {
     var suggestStep = $('#suggest-step-' + id).val();
     var suggestPersonAccount = $('#suggest-person-account-' + id).val();
     var suggestOpportunity = $('#suggest-opportunity-' + id).val();
+    var suggestOpportunityText = $('#suggest-opportunity-' + id + ' option:selected').text();
     var suggestNote = $('#suggest-note-' + id).val();
     var suggestDate = $('#suggest-by-' + id).val();
     var suggestPriority = $('#suggest-priority-' + id).val();
@@ -185,25 +183,25 @@ $(document).ready(function () {
           className = 'bg-danger text-white';
           priorityName = 'High';
         } else if (suggestPriority == 2) {
-          className = 'bg-warning';
+          className = 'bg-warning text-dark';
           priorityName = 'Medium';
         } else if (suggestPriority == 3) {
-          className = 'bg-light';
+          className = 'bg-light text-dark';
           priorityName = 'Normal';
         } else {
-          className = 'bg-light';
+          className = 'bg-light text-dark';
           priorityName = '';
         }
 
         var innerHtml = '';
         innerHtml += '<tr class="' + className + '">';
         innerHtml += '<td>' + res.action_name + ' ' + res.step_name + '</td>';
-        innerHtml += '<td class="text-center">' + suggestPersonAccount + '</td>';
-        innerHtml += '<td class="text-center">' + suggestOpportunity + '</td>';
+        innerHtml += '<td>' + suggestPersonAccount + '</td>';
+        innerHtml += '<td>' + suggestOpportunityText + '</td>';
         innerHtml += '<td>' + suggestNote + '</td>';
-        innerHtml += '<td class="text-center">' + suggestDate + '</td>';
-        innerHtml += '<td class="text-center">' + priorityName + '</td>';
-        innerHtml += '<td class="text-center">';
+        innerHtml += '<td>' + suggestDate + '</td>';
+        innerHtml += '<td>' + priorityName + '</td>';
+        innerHtml += '<td>';
         innerHtml += '<button type="button" class="btn btn-sm btn-task-c-s btn-dark btn-skip" data-id="' + res.task_id + '">Skip</button> ';
         innerHtml += '<button type="button" class="btn btn-sm btn-task-c-s btn-success btn-done" data-id="' + res.task_id + '">Done</button>';
         innerHtml += '</td>';

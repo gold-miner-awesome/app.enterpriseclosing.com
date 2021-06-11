@@ -22,9 +22,7 @@ $(document).ready(function () {
     autoclose: true
   }).datepicker("setDate", new Date());
   $('#btn-show-modal').click(function () {
-    // Initialize account name input
-    $('#account-name').val(''); //Show modal
-
+    //Show modal
     $('#add-account-modal').modal({
       backdrop: 'static'
     });
